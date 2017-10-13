@@ -19,3 +19,6 @@
 .byebug_history
 .env
 .idea
+/public/packs
+/public/packs-test
+/node_modules
