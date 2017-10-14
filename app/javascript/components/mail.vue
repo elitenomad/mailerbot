@@ -3,24 +3,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h1>Software Engineer Challenge V2.2 - Email</h1>
-                    <p class="lead">
-                        Email Providers: Sendgrid and mailgun
-                    </p>
+                    <Headers></Headers>
 
                     <form id="contact-form" role="form" @submit.prevent="validateForm('form-1')" data-vv-scope="form-1" novalidate>
 
-                        <div class="alert alert-danger alert-dismissible fade in" v-if="form_errors.length > 0">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <ul v-for="error in form_errors">
-                                <li>{{ error['field'] }}: {{ error['message'] }}</li>
-                            </ul>
-                        </div>
-
-                        <div class="alert alert-success alert-dismissible fade in" v-if="form_success">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <span>{{ form_success }}</span>
-                        </div>
+                        <Errors :form_errors='form_errors'></Errors>
+                        <Success :form_success="form_success"></Success>
 
                         <div class="controls">
 
@@ -38,8 +26,8 @@
                                         <span class="help-block pull-right" v-show="errors.has('form-1.from')">{{ errors.first('form-1.from') }}</span>
                                     </div>
                                 </div>
-
                             </div>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group" :class="{'input': true, 'has-error': errors.has('form-1.to') }">
@@ -136,6 +124,9 @@
 
 <script>
     import axios from 'axios';
+    import Headers from './header_c.vue';
+    import Errors from './errors.vue';
+    import Success from './success.vue';
 
     export default {
         data () {
@@ -152,12 +143,13 @@
                 form_success: ''
             }
         },
+        components: { Headers, Errors, Success },
         methods: {
             /**
              * Callback method when form is submitted.
              */
             validateForm (scope) {
-                var that = this;
+                let that = this;
                 this.$validator.validateAll(scope).then((result) => {
                     if (result) {
                         axios.post('/api/v1.0.0/compose', that.mail)

@@ -12,7 +12,7 @@ import Vue from 'vue/dist/vue.esm'
 
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
-import App from '../components/mail.vue'
+import App from '../components/mail.vue';
 
 
 document.addEventListener('DOMContentLoaded', () => {
