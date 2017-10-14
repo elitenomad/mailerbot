@@ -32,7 +32,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'grape'
-gem 'email-delivery', '0.1.1'
+gem 'email-delivery', '0.1.2' #path: '../email-delivery'
 gem 'webpacker', '~> 3.0'
 gem 'foreman'
 gem 'bootstrap-sass', '~> 3.3.6'
@@ -46,6 +46,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.2'
   gem 'factory_girl_rails', '~> 4.5'
   gem 'database_cleaner'
+  gem 'rspec-grape'
 end
 
 group :test do

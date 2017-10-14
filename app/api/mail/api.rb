@@ -36,10 +36,14 @@ module Mail
         response = client.dispatch
       rescue Exception => e
         puts "Error stacktrace #{ e }"
-        response = {status: 4, message: e.message }
+        response = {status: 4, message: e.response }
       end
 
       response
+    end
+
+    get 'ping' do
+      { "status" => "ok" }
     end
   end
 end

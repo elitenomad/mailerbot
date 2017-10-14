@@ -13,7 +13,7 @@
                         <div class="alert alert-danger alert-dismissible fade in" v-if="form_errors.length > 0">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                             <ul v-for="error in form_errors">
-                                <li>{{ error }}</li>
+                                <li>{{ error['field'] }}: {{ error['message'] }}</li>
                             </ul>
                         </div>
 
@@ -57,29 +57,32 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div class="form-group" :class="{'input': true, 'has-error': errors.has('form-1.cc') }">
                                         <label for="form_cc">CC</label>
                                         <input id="form_cc"
                                                type="email"
-                                               name="email"
+                                               name="cc"
                                                class="form-control"
                                                placeholder="e.g xyz_cc@gmail.com, mnop_cc@gmail.com"
+                                               v-validate="{ required: false, regex: /^\w+(.\w+)*@\w+\.\w+(,\s*\w+@\w+\.\w+)*$/ }"
                                                 v-model="mail.cc">
+                                        <span class="help-block pull-right" v-show="errors.has('form-1.cc')">{{ errors.first('form-1.cc') }}</span>
                                     </div>
                                 </div>
 
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div class="form-group" :class="{'input': true, 'has-error': errors.has('form-1.bcc') }">
                                         <label for="form_bcc">BCC</label>
                                         <input id="form_bcc"
                                                type="email"
-                                               name="email"
+                                               name="bcc"
                                                class="form-control"
                                                placeholder="e.g xyz_bcc@gmail.com, mnop_bcc@gmail.com"
-                                                v-model="mail.bcc">
-                                        <div class="help-block with-errors"></div>
+                                               v-validate="{ required: false, regex: /^\w+(.\w+)*@\w+\.\w+(,\s*\w+@\w+\.\w+)*$/ }"
+                                               v-model="mail.bcc">
+                                        <span class="help-block pull-right" v-show="errors.has('form-1.bcc')">{{ errors.first('form-1.bcc') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -138,12 +141,12 @@
         data () {
             return {
                 mail: {
-                    from: '',
-                    to: '',
-                    cc: '',
-                    bcc: '',
-                    subject: '',
-                    body: ''
+                    from: undefined,
+                    to: undefined,
+                    cc: undefined,
+                    bcc: undefined,
+                    subject: undefined,
+                    body: undefined
                 },
                 form_errors: [],
                 form_success: ''
@@ -157,13 +160,20 @@
                 var that = this;
                 this.$validator.validateAll(scope).then((result) => {
                     if (result) {
-                        axios.post('/api/v1.0.0/compose', this.mail)
+                        axios.post('/api/v1.0.0/compose', that.mail)
                             .then(function (response) {
-                                that.form_success = 'Email sent successfully';
+                                console.log("what is resoonse ", response);
+                                const message = response.data
+                                if(message.status === 0){
+                                    that.form_success = 'Email sent successfully';
+                                }else {
+                                    if(JSON.parse(message.message)['errors']){
+                                        that.form_errors = JSON.parse(message.message)['errors'];
+                                    }
+                                }
                             })
                             .catch(function (error) {
                                 console.log("what is error ", error);
-                                that.form_errors = error.response.data.error.split(',');
                             });
                     }
                 });

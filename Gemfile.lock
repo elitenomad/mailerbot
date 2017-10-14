@@ -81,7 +81,7 @@ GEM
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
-    email-delivery (0.1.1)
+    email-delivery (0.1.2)
       rest-client (~> 2.0.2)
     equalizer (0.0.11)
     erubi (1.6.1)
@@ -184,6 +184,9 @@ GEM
     rspec-expectations (3.6.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.6.0)
+    rspec-grape (0.0.4)
+      rack-test (~> 0.6)
+      rspec-core (~> 3.0)
     rspec-mocks (3.6.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.6.0)
@@ -263,7 +266,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   database_cleaner
   dotenv-rails
-  email-delivery (= 0.1.1)
+  email-delivery (= 0.1.2)
   factory_girl_rails (~> 4.5)
   foreman
   grape
@@ -273,6 +276,7 @@ DEPENDENCIES
   pg (~> 0.18)
   puma (~> 3.7)
   rails (~> 5.1.4)
+  rspec-grape
   rspec-rails (~> 3.2)
   sass-rails (~> 5.0)
   spring
