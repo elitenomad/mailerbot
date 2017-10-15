@@ -35,6 +35,7 @@ Things you may want to cover:
     
     JS Specs:
     Reference: https://github.com/rails/webpacker/issues/574 (To setup Vue component testing)
+    cd test (From project directory)
     yarn test
 
 

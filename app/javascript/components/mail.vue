@@ -23,7 +23,7 @@
                                                placeholder="e.g abc@gmail.com"
                                                v-model="mail.from"
                                                v-validate="{ required: true, email: true, regex: /.+@.+/ }" autofocus>
-                                        <span class="help-block pull-right" v-show="errors.has('form-1.from')">{{ errors.first('form-1.from') }}</span>
+                                        <span d="form_from_error" class="help-block pull-right" v-show="errors.has('form-1.from')">{{ errors.first('form-1.from') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                                type="text"
                                                name="to"
                                                class="form-control"
-                                               placeholder="e.g xyz@gmail.com, mnop@gmail.com"
+                                               placeholder="e.g xyz@gmail.com,mnop@gmail.com"
                                                v-model="mail.to"
                                                v-validate="{ required: true, regex: /^\w+(.\w+)*@\w+\.\w+(,\s*\w+@\w+\.\w+)*$/ }">
                                         <span class="help-block pull-right" v-show="errors.has('form-1.to')">{{ errors.first('form-1.to') }}</span>
@@ -51,7 +51,7 @@
                                                type="email"
                                                name="cc"
                                                class="form-control"
-                                               placeholder="e.g xyz_cc@gmail.com, mnop_cc@gmail.com"
+                                               placeholder="e.g xyz_cc@gmail.com,mnop_cc@gmail.com"
                                                v-validate="{ required: false, regex: /^\w+(.\w+)*@\w+\.\w+(,\s*\w+@\w+\.\w+)*$/ }"
                                                 v-model="mail.cc">
                                         <span class="help-block pull-right" v-show="errors.has('form-1.cc')">{{ errors.first('form-1.cc') }}</span>
@@ -67,7 +67,7 @@
                                                type="email"
                                                name="bcc"
                                                class="form-control"
-                                               placeholder="e.g xyz_bcc@gmail.com, mnop_bcc@gmail.com"
+                                               placeholder="e.g xyz_bcc@gmail.com,mnop_bcc@gmail.com"
                                                v-validate="{ required: false, regex: /^\w+(.\w+)*@\w+\.\w+(,\s*\w+@\w+\.\w+)*$/ }"
                                                v-model="mail.bcc">
                                         <span class="help-block pull-right" v-show="errors.has('form-1.bcc')">{{ errors.first('form-1.bcc') }}</span>
@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success btn-send">Send Message</button>&nbsp;&nbsp;
+                                    <button type="submit" id="submit" class="btn btn-success btn-send">Send Message</button>&nbsp;&nbsp;
                                     <button class="btn btn-danger" type="button" name="button" @click="clearForm">Clear validations</button>
                                 </div>
                             </div>
@@ -154,10 +154,18 @@
                     if (result) {
                         axios.post('/api/v1.0.0/compose', that.mail)
                             .then(function (response) {
-                                console.log("what is resoonse ", response);
-                                const message = response.data
+                                const message = response.data;
                                 if(message.status === 0){
                                     that.form_success = 'Email sent successfully';
+                                    that.mail = {
+                                        from: undefined,
+                                        to: undefined,
+                                        cc: undefined,
+                                        bcc: undefined,
+                                        subject: undefined,
+                                        body: undefined
+                                    };
+                                    that.$validator.clean();
                                 }else {
                                     if(JSON.parse(message.message)['errors']){
                                         that.form_errors = JSON.parse(message.message)['errors'];
@@ -170,7 +178,8 @@
                     }
                 });
             },
-            clearForm (e){
+            clearForm (){
+                //Ref: https://jsfiddle.net/zcppuzjc/1/
                 this.mail = {
                     from: '',
                     to: '',
@@ -179,8 +188,7 @@
                     subject: '',
                     body: ''
                 };
-                this.errors.clear('form-1');
-                e.preventDefault();
+                this.$validator.clean();
             }
         }
     }

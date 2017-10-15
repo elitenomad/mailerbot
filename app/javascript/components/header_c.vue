@@ -1,9 +1,7 @@
 <template>
     <div id="header">
         <h1>{{ h1 }}</h1>
-        <p class="lead">
-            {{ lead }}
-        </p>
+        <p class="lead">{{ lead }}</p>
     </div>
 </template>
 
