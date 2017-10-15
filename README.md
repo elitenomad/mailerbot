@@ -1,11 +1,9 @@
 # https://rocky-forest-72279.herokuapp.com/
 
-This gem is a Rails + Vue JS (frontend) Project that accepts the necessary form fields and sends emails. It uses an abstraction provided by email-delivery gem to send e-mails.
+This gem is a Rails + Vue JS (frontend) Project that accepts the necessary form fields and sends emails. 
+It uses an abstraction provided by email-delivery gem to send e-mails.
 
-This README would normally document whatever steps are necessary to get the
-application up and running. 
-
-Things you may want to cover:
+This README would normally document whatever steps are necessary to get the application up and running. 
 
 * Ruby version
     2.3.3

@@ -32,7 +32,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'grape'
-gem 'email-delivery', '0.1.2' #path: '../email-delivery'
+gem 'email-delivery', '0.1.3' #path: '../email-delivery'
 gem 'webpacker', '~> 3.0'
 gem 'foreman'
 gem 'bootstrap-sass', '~> 3.3.6'
