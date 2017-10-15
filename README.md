@@ -45,6 +45,15 @@ This README would normally document whatever steps are necessary to get the appl
 
 * ...
 
+* Folder structure
+    app
+      api (API code)
+      controllers (Routing controller actions)
+      javascript (Vue JS front-end compoentns)
+    spec
+      Rails specs
+    test
+      JS specs
 
 ### Javascript Testing tools
 
